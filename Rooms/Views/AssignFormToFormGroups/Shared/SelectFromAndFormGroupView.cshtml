@@ -1,0 +1,69 @@
+﻿@model DocuSign.CodeExamples.Rooms.Models.FormFormGroupModel
+@using System.Text.RegularExpressions;
+@{
+    var redirectToSeventhCodeExample = "href='Reg007'";
+    int formNumber = 0;
+    int formGroupInputNumber = 0;
+    int formInputNumber = 1;
+}
+
+@if (Model.Forms != null && Model.Forms.Any())
+{
+    @if (Model.FormGroups != null && Model.FormGroups.Any())
+    {
+        <p>@Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].FormName)</p>
+
+        <form class="eg" asp-action="AssignFormToFormGroup" method="post" data-busy="form">
+            <div class="form-group">
+                <label for="docSelect">
+                    @Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].Inputs[formGroupInputNumber].InputName)
+                </label>
+
+                <select class="custom-select"
+                        asp-for="FormGroupId"
+                        asp-items="@(new SelectList(Model.FormGroups, "FormGroupId", "Name"))"
+                        data-val="true"
+                        data-val-required="The Form Group field is required.">
+                    <option>@ViewBag.CodeExampleText.Forms[formNumber].Inputs[formGroupInputNumber].InputPlaceholder</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="docSelect">
+                    @Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].Inputs[formInputNumber].InputName)
+                </label>
+
+                <select class="custom-select"
+                        asp-for="FormId"
+                        asp-items="@(new SelectList(Model.Forms, "LibraryFormId", "Name"))"
+                        data-val="true"
+                        data-val-required="The Froms field is required.">
+                    <option>@ViewBag.CodeExampleText.Forms[formNumber].Inputs[formInputNumber].InputPlaceholder</option>
+                </select>
+            </div>
+
+            <input type="hidden" name="_csrf" value="<%- csrfToken %>">
+            <input type="submit" class="btn btn-primary" value="Add" id="btnSubmit" />
+        </form>
+    }
+    else
+    {
+        <p>
+            @Html.Raw(
+                String.Format(
+                    ((IEnumerable<dynamic>)ViewBag.CodeExampleText.RedirectsToOtherCodeExamples)
+                        .Where(x => x.CodeExampleToRedirectTo == int.Parse(Regex.Match(redirectToSeventhCodeExample, @"\d+").Value))
+                        .FirstOrDefault()
+                        .RedirectText,
+                    redirectToSeventhCodeExample
+                )
+            )
+        </p>
+        <a href="/?egName=home" class="btn btn-primary">@Html.Raw(ViewBag.SupportingTexts.ContinueButton)</a>
+    }
+}
+else
+{
+    @Html.Raw(ViewBag.CodeExampleText.RedirectsToOtherCodeExamples[1].RedirectText)
+    <a href="/?egName=home" class="btn btn-primary">@Html.Raw(ViewBag.SupportingTexts.ContinueButton)</a>
+}

@@ -1,0 +1,75 @@
+﻿@model DocuSign.CodeExamples.Rooms.Models.OfficeAccessModel
+@using System.Text.RegularExpressions;
+@{
+    var redirectToSeventhCodeExample = "href='Reg007'";
+    int formNumber = 0;
+    int formInputNumber = 0;
+    int officeInputNumber = 1;
+}
+
+@if (Model.Offices != null && Model.Offices.Any())
+{
+    @if (Model.FormGroups != null && Model.FormGroups.Any())
+    {
+        <p>@Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].FormName)</p>
+
+        <form class="eg" asp-action="GrantAccess" method="post" data-busy="form">
+            <div class="form-group">
+                <label for="formGroupSelect">
+                    @Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].Inputs[formInputNumber].InputName)
+                </label>
+
+                <select class="custom-select"
+                        id="formGroupSelect"
+                        asp-for="FormGroupId"
+                        asp-items="@(new SelectList(Model.FormGroups, "FormGroupId", "Name"))"
+                        data-val="true"
+                        data-val-required="The Form Group field is required.">
+                    <option>
+                        @ViewBag.CodeExampleText.Forms[formNumber].Inputs[formInputNumber].InputPlaceholder
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="officeSelect">
+                    @Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].Inputs[officeInputNumber].InputName)
+                </label>
+
+                <select class="custom-select"
+                        id="officeSelect"
+                        asp-for="OfficeId"
+                        asp-items="@(new SelectList(Model.Offices, "OfficeId", "Name"))"
+                        data-val="true"
+                        data-val-required="The Office field is required.">
+                    <option>
+                        @ViewBag.CodeExampleText.Forms[formNumber].Inputs[officeInputNumber].InputPlaceholder
+                    </option>
+                </select>
+            </div>
+
+            <input type="hidden" name="_csrf" value="<%- csrfToken %>">
+            <input type="submit" class="btn btn-primary" value="Grant Access" id="btnSubmit" />
+        </form>
+}
+else
+{
+        <p>
+            @Html.Raw(
+                String.Format(
+                    ((IEnumerable<dynamic>)ViewBag.CodeExampleText.RedirectsToOtherCodeExamples)
+                        .Where(x => x.CodeExampleToRedirectTo == int.Parse(Regex.Match(redirectToSeventhCodeExample, @"\d+").Value))
+                        .FirstOrDefault()
+                        .RedirectText,
+                    redirectToSeventhCodeExample
+                )
+            )
+        </p>
+        <a href="/?egName=home" class="btn btn-primary">@Html.Raw(ViewBag.SupportingTexts.ContinueButton)</a>
+    }
+}
+else
+{
+    <p>@Html.Raw(ViewBag.CodeExampleText.RedirectsToOtherCodeExamples[1].RedirectText)</p>
+    <a href="/?egName=home" class="btn btn-primary">@Html.Raw(ViewBag.SupportingTexts.ContinueButton)</a>
+}

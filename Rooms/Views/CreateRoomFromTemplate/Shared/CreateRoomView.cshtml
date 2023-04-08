@@ -1,0 +1,40 @@
+﻿@model DocuSign.CodeExamples.Rooms.Models.RoomModel
+@using System.Text.RegularExpressions;
+@{
+    var redirectToSecondCodeExample = "href='Reg002'";
+    int formNumber = 0;
+    int roomNameInputNumber = 0;
+    int templateInputNumber = 1;
+}
+
+@if (Model.Templates != null && Model.Templates.Any())
+{
+    <form class="eg" asp-action="Create" method="post" data-busy="form">
+        <div class="form-group">
+            <label asp-for="Name">
+                @Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].Inputs[roomNameInputNumber].InputName)
+            </label>
+
+            <input type="input" class="form-control" asp-for="Name" 
+                placeholder="@ViewBag.CodeExampleText.Forms[formNumber].Inputs[roomNameInputNumber].InputPlaceholder" required>
+        </div>
+
+        <div class="form-group">
+            <label for="docSelect">
+                @Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].Inputs[templateInputNumber].InputName)
+            </label>
+
+            <select class="custom-select" asp-for="TemplateId" 
+                asp-items="@(new SelectList(Model.Templates, "RoomTemplateId", "Name"))" required>
+            </select>
+        </div>
+
+        <input type="hidden" name="_csrf" value="<%- csrfToken %>">
+        <button type="submit" class="btn btn-primary">@Html.Raw(ViewBag.SupportingTexts.SubmitButton)</button>
+    </form>
+}
+else
+{
+    <p>@Html.Raw(ViewBag.CodeExampleText.RedirectsToOtherCodeExamples[0].RedirectText)</p>
+    <a href="/?egName=home" class="btn btn-primary">@Html.Raw(ViewBag.SupportingTexts.ContinueButton)</a>
+}
