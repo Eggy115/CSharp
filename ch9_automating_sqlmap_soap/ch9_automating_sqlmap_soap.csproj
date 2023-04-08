@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{A54886E3-D225-4D6C-84E8-7E6BBC4C593E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ch9_automating_sqlmap_soap</RootNamespace>
+    <AssemblyName>ch9_automating_sqlmap_soap</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Commandlineparameters>http://172.18.20.40/Vulnerable.asmx</Commandlineparameters>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="SoapBinding.cs" />
+    <Compile Include="SoapBindingOperation.cs" />
+    <Compile Include="SoapMessage.cs" />
+    <Compile Include="SoapMessagePart.cs" />
+    <Compile Include="SoapOperation.cs" />
+    <Compile Include="SoapPort.cs" />
+    <Compile Include="SoapPortType.cs" />
+    <Compile Include="SoapService.cs" />
+    <Compile Include="SoapType.cs" />
+    <Compile Include="SoapTypeParameter.cs" />
+    <Compile Include="WSDL.cs" />
+    <Compile Include="sqlmapsharp\SqlmapLogItem.cs" />
+    <Compile Include="sqlmapsharp\SqlmapManager.cs" />
+    <Compile Include="sqlmapsharp\SqlmapSession.cs" />
+    <Compile Include="sqlmapsharp\SqlmapStatus.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="sqlmapsharp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
