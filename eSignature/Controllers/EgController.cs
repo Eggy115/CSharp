@@ -1,60 +1,35 @@
-﻿using DocuSign.CodeExamples.Common;
-using DocuSign.CodeExamples.ESignature.Models;
-using DocuSign.CodeExamples.Models;
-using DocuSign.CodeExamples.Views;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿// <copyright file="EgController.cs" company="DocuSign">
+// Copyright (c) DocuSign. All rights reserved.
+// </copyright>
 
 namespace DocuSign.CodeExamples.Controllers
 {
+    using System;
+    using System.Text.RegularExpressions;
+    using DocuSign.CodeExamples.Common;
+    using DocuSign.CodeExamples.ESignature.Models;
+    using DocuSign.CodeExamples.Models;
+    using DocuSign.CodeExamples.Views;
+    using Microsoft.AspNetCore.Mvc;
+
     public abstract class EgController : Controller
     {
+        public LauncherTexts LauncherTexts { get; }
+
         public abstract string EgName { get; }
 
         protected CodeExampleText CodeExampleText { get; set; }
-        public DSConfiguration Config { get; }
-        public LauncherTexts LauncherTexts { get; }
-        public IRequestItemsService RequestItemsService { get; }
+
+        protected DSConfiguration Config { get; }
+
+        protected IRequestItemsService RequestItemsService { get; }
 
         public EgController(DSConfiguration config, LauncherTexts launcherTexts, IRequestItemsService requestItemsService)
         {
-            Config = config;
-            RequestItemsService = requestItemsService;
-            ViewBag.csrfToken = "";
-            LauncherTexts = launcherTexts;
-        }
-
-        [Route("/")]
-        public virtual IActionResult Index()
-        {
-            var identity = this.Request.HttpContext.User.Identity as ClaimsIdentity;
-            if (identity.IsAuthenticated == true)
-            {
-                RequestItemsService.User = RequestItemsService.User ?? new User
-                {
-                    Name = identity.FindFirst(x => x.Type.Equals(ClaimTypes.Name)).Value,
-                    AccessToken = identity.FindFirst(x => x.Type.Equals("access_token")).Value,
-                    RefreshToken = identity.FindFirst(x => x.Type.Equals("refresh_token"))?.Value,
-                    ExpireIn = DateTime.Parse(identity.FindFirst(x => x.Type.Equals("expires_in")).Value)
-                };
-                RequestItemsService.Session = RequestItemsService.Session ?? new Session
-                {
-                    AccountId = identity.FindFirst(x => x.Type.Equals("account_id")).Value,
-                    AccountName = identity.FindFirst(x => x.Type.Equals("account_name")).Value,
-                    BasePath = identity.FindFirst(x => x.Type.Equals("base_uri")).Value
-                };
-            }
-
-            return Redirect("eg001");
-        }
-
-        [Route("/dsReturn")]
-        public IActionResult DsReturn()
-        {
-            return Redirect("eg001");
+            this.Config = config;
+            this.RequestItemsService = requestItemsService;
+            this.ViewBag.csrfToken = string.Empty;
+            this.LauncherTexts = launcherTexts;
         }
 
         [HttpGet]
@@ -63,31 +38,45 @@ namespace DocuSign.CodeExamples.Controllers
             // Check that the token is valid and will remain valid for awhile to enable the
             // user to fill out the form. If the token is not available, now is the time
             // to have the user authenticate or re-authenticate.
-            bool tokenOk = CheckToken();
+            bool tokenOk = this.CheckToken();
+            if (this.RequestItemsService.Configuration["API"] == null)
+            {
+                this.RequestItemsService.Configuration["API"] = ExamplesAPIType.ESignature.ToString();
+            }
+
+            ExamplesAPIType previousLoginSchema = Enum.Parse<ExamplesAPIType>(this.RequestItemsService.Configuration["API"]);
+            ExamplesAPIType currentAPI = Enum.Parse<ExamplesAPIType>(this.RequestItemsService.IdentifyAPIOfCodeExample(this.EgName));
+            this.RequestItemsService.Configuration["APIPlanned"] = currentAPI.ToString();
 
             if (tokenOk)
             {
-                ViewBag.envelopeOk = RequestItemsService.EnvelopeId != null;
-                ViewBag.gatewayOk = Config.GatewayAccountId != null && Config.GatewayAccountId.Length > 25;
-                ViewBag.source = CreateSourcePath();
-                ViewBag.documentation = Config.Documentation + EgName;
-                ViewBag.showDoc = Config.Documentation != null;
-                ViewBag.User = RequestItemsService.User;
-                ViewBag.Session = RequestItemsService.Session;
-                ViewBag.DsConfig = Config;
-                ViewBag.User = RequestItemsService.User;
-                ViewBag.DsConfig = Config;
-                InitializeInternal();
-
-                if (Config.QuickACG == "true" && !(this is Eg001EmbeddedSigningController))
+                if (previousLoginSchema == currentAPI)
                 {
-                    return Redirect("eg001");
-                }
+                    // addSpecialAttributes(model);
+                    this.ViewBag.envelopeOk = this.RequestItemsService.EnvelopeId != null;
+                    this.ViewBag.documentsOk = this.RequestItemsService.EnvelopeDocuments != null;
+                    this.ViewBag.documentOptions = this.RequestItemsService.EnvelopeDocuments?.Documents;
+                    this.ViewBag.gatewayOk = this.Config.GatewayAccountId != null && this.Config.GatewayAccountId.Length > 25;
+                    this.ViewBag.templateOk = this.RequestItemsService.TemplateId != null;
+                    this.ViewBag.source = this.CreateSourcePath();
+                    this.ViewBag.documentation = this.Config.Documentation + this.EgName;
+                    this.ViewBag.showDoc = this.Config.Documentation != null;
+                    this.ViewBag.pausedEnvelopeOk = this.RequestItemsService.PausedEnvelopeId != null;
+                    this.InitializeInternal();
 
-                return View(EgName, this);
+                    if (this.Config.QuickACG == "true" && !(this is Eg001EmbeddedSigningController))
+                    {
+                        return this.Redirect("eg001");
+                    }
+
+                    return this.View(this.EgName, this);
+                }
             }
 
-            return Redirect("/ds/mustAuthenticate");
+            this.RequestItemsService.EgName = this.EgName;
+            this.Response.Redirect("/ds/mustAuthenticate");
+
+            return this.LocalRedirect("/ds/mustAuthenticate");
         }
 
         protected virtual void InitializeInternal()
@@ -98,14 +87,25 @@ namespace DocuSign.CodeExamples.Controllers
 
         public dynamic CreateSourcePath()
         {
-            var uri = Config.GithubExampleUrl;
-            uri = $"{uri}/eSignature";
-            return $"{uri}/Controllers/{this.GetType().Name}.cs";
-        }
-
-        protected bool CheckToken(int bufferMin = 60)
-        {
-            return RequestItemsService.CheckToken(bufferMin);
+            var uri = this.Config.GithubExampleUrl;
+            if (this.ControllerContext.RouteData.Values["area"] != null)
+            {
+                uri = $"{uri}/{this.ControllerContext.RouteData.Values["area"]}";
+                return $"{uri}/Examples/{this.GetType().Name}.cs";
+            }
+            else if (this.EgName == "monitorExample001")
+            {
+                return "https://github.com/docusign/code-examples-csharp/blob/master/launcher-csharp/Monitor/Examples/GetMonitoringData.cs";
+            }
+            else if (this.EgName != "eg001") // eg001 is at the top level
+            {
+                uri = $"{uri}/eSignature";
+                return $"{uri}/Examples/{this.GetType().Name}.cs";
+            }
+            else
+            {
+                return $"{uri}/{this.GetType().Name}.cs";
+            }
         }
 
         protected CodeExampleText GetExampleText(string exampleName, ExamplesAPIType examplesAPIType)
@@ -126,6 +126,11 @@ namespace DocuSign.CodeExamples.Controllers
             }
 
             return null;
+        }
+
+        protected bool CheckToken(int bufferMin = 60)
+        {
+            return this.RequestItemsService.CheckToken(bufferMin);
         }
     }
 }
