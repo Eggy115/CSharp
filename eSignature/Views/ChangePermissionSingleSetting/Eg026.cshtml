@@ -1,0 +1,24 @@
+@model DocuSign.CodeExamples.Controllers.ChangePermissionSingleSetting
+<h4>@Html.Raw(ViewBag.CodeExampleText.ExampleName)</h4>
+
+<p>
+    @Html.Raw(ViewBag.CodeExampleText.ExampleDescription)
+</p>
+
+@if (ViewBag.showDoc == true)
+{
+    <p><a target='_blank' href='<%= documentation %>'>Documentation</a> about this example</p>
+}
+
+<partial name="../../../Views/Shared/LinkToMethodView" model="ViewBag.CodeExampleText" /> 
+
+<p>
+@Html.Raw(
+    @String.Format(
+        ViewBag.SupportingTexts.ViewSourceFile, 
+        "<a target='_blank' href=" + @ViewBag.source + ">ChangePermissionSingleSetting.cs</a>"
+        )
+    )
+</p>
+
+<partial name="PermissionProfileView" model="Model.ProfileModel" />

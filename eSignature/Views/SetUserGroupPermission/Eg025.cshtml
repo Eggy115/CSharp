@@ -1,0 +1,50 @@
+﻿@{
+    int formNumber = 0;
+    int permissionInputNumber = 0;
+    int groupInputNumber = 1;
+}
+
+
+<h4>@Html.Raw(ViewBag.CodeExampleText.ExampleName)</h4>
+<p>
+    @Html.Raw(ViewBag.CodeExampleText.ExampleDescription)
+</p>
+
+
+@if (ViewBag.showDoc)
+{
+    <p><a target='_blank' href="@ViewBag.documentation">Documentation</a> about this example</p>
+}
+
+<partial name="../../../Views/Shared/LinkToMethodView" model="ViewBag.CodeExampleText" /> 
+
+<p>
+@Html.Raw(@String.Format(ViewBag.SupportingTexts.ViewSourceFile, "<a target='_blank' href=" + @ViewBag.source + ">SetUserGroupPermission.cs</a>"))
+</p>
+
+<form action="" class="eg" method="post" data-busy="form">
+
+    <div class="form-group">
+
+        <label for="permissionProfileId">
+            @Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].Inputs[permissionInputNumber].InputName)
+        </label>
+        @Html.DropDownList(
+            "permissionProfileId",
+            ViewBag.PermissionProfiles,
+            @ViewBag.CodeExampleText.Forms[formNumber].Inputs[permissionInputNumber].InputPlaceholder,
+            new { @class = "custom-select", required = "required" })
+    </div>
+    <div class="form-group">
+        <label for="userGroupId">
+            @Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].Inputs[groupInputNumber].InputName)
+        </label>
+        @Html.DropDownList(
+            "userGroupId",
+            ViewBag.UserGroups,
+            @ViewBag.CodeExampleText.Forms[formNumber].Inputs[groupInputNumber].InputPlaceholder,
+            new { @class = "custom-select", required = "required" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">@Html.Raw(ViewBag.SupportingTexts.SubmitButton)</button>
+</form>

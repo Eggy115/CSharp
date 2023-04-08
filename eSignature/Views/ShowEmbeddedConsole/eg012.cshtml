@@ -1,0 +1,45 @@
+﻿@using System.Text.RegularExpressions;
+@{
+    var redirectToSecondCodeExample = "href='eg002'";
+    int formNumber = 0;
+    int viewInputNumber = 0;
+}
+
+<h4>@Html.Raw(ViewBag.CodeExampleText.ExampleName)</h4>
+<p>
+    @Html.Raw(ViewBag.CodeExampleText.ExampleDescription)
+</p>
+
+@if (ViewBag.showDoc) {
+<p><a target='_blank' href='@ViewBag.documentation'>Documentation</a> about this example</p>
+}
+
+<partial name="../../../Views/Shared/LinkToMethodView" model="ViewBag.CodeExampleText" /> 
+
+<p>
+@Html.Raw(@String.Format(ViewBag.SupportingTexts.ViewSourceFile, "<a target='_blank' href=" + @ViewBag.source + ">ShowEmbeddedConsole.cs</a>"))
+</p>
+
+@if (!ViewBag.envelopeOk) {
+    @Html.Raw(
+        String.Format(
+            ((IEnumerable<dynamic>) ViewBag.CodeExampleText.RedirectsToOtherCodeExamples)
+                .Where(x => x.CodeExampleToRedirectTo == int.Parse(Regex.Match(redirectToSecondCodeExample, @"\d+").Value))
+                .FirstOrDefault()
+                .RedirectText,
+            redirectToSecondCodeExample
+        )
+    )
+}
+
+<form class="eg" action="" method="post" data-busy="form">
+    <div class="form-group">
+        <label for="startingView">@Html.Raw(ViewBag.CodeExampleText.Forms[formNumber].Inputs[viewInputNumber].InputName)</label>
+        <select id="startingView" name="startingView" class="form-control">
+            <option value="frontPage" selected>Front page</option>
+            <!option value="envelope" @ViewBag.envelopeOk ? "" : 'disabled="true"'> The envelope's Documents view</!option>
+        </select>
+    </div>
+    <input type="hidden" name="_csrf" value="@ViewBag.csrfToken">
+    <button type="submit" class="btn btn-primary">@Html.Raw(ViewBag.SupportingTexts.ContinueButton)</button>
+</form>
