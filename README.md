@@ -19,19 +19,43 @@ C# is a programming language developed by Microsoft. It is a modern, object-orie
 
 ### Installing C-Sharp
 
-To run the programs and scripts in this repository, you will need to have the .NET Framework installed on your computer. You can download the latest version from the official Microsoft website: https://dotnet.microsoft.com/download
+To run the programs and scripts in this repository, you will need to have the .NET Framework installed on your computer. You can download the latest version from the official Microsoft website: https://dotnet.microsoft.com/download/. Below are platform-specific instructions.
+
+#### Windows
+
+1. Download the .NET SDK (Software Development Kit) from the official Microsoft website.
+2. Run the downloaded file and follow the installation instructions.
+3. Once the installation is complete, you can use any text editor or IDE (Integrated Development Environment) to write and compile C# code.
+
+#### Linux
+
+1. Install the Mono Project, which is an open-source implementation of Microsoft's .NET framework for Linux systems.
+2. Open a terminal and run the following command to install Mono:
+
+```
+sudo apt-get install mono-complete
+```
+
+This will install the full Mono framework, including the C# compiler.
+
+3. Once Mono is installed, you can use any text editor or IDE to write and compile C# code.
+
+#### macOS
+
+1. Install Visual Studio for Mac, which is a full-featured IDE for developing C# applications on macOS.
+2. Once Visual Studio for Mac is installed, you can create a new C# project or open an existing project.
+3. You can then use the built-in C# compiler to compile your code and run your application.
+
+Alternatively, you can also install the .NET SDK for macOS and use any text editor or IDE to write and compile C# code.
 
 ### Installing Repository
 
-- Clone the repository
+You can download individual files, copy & paste code, or clone the repository
 
 ```
 git clone https://github.com/Eggy115/CSharp.git
 ```
       
-*OR* copy and paste code     
-*OR* download individual files
-
 ## Usage
 
 - To run a C# program, you'll need to compile it first.       
