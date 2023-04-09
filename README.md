@@ -1,6 +1,6 @@
 # C#
 
-This repository contains various C# programs and scripts. All code is licensed under the GNU General Public License v3.0 (GPLv3).
+This repository contains various C# programs and scripts.
 
 ## Table of Contents
 - [Getting Started](#getting-started)  
@@ -23,11 +23,14 @@ To run the programs and scripts in this repository, you will need to have the .N
 
 ### Installing Repository
 
-1. Clone the repository
+- Clone the repository
 
 ```
 git clone https://github.com/Eggy115/CSharp.git
 ```
+
+*OR* Copy and paste code
+*OR* Download individual files
 
 ## Usage
 
