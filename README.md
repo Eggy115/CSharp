@@ -4,8 +4,8 @@ This repository contains various C# programs and scripts. All code is licensed u
 
 ## Table of Contents
 - [Getting Started](#getting-started)  
-  - [What is C#](#what-is-c#)   
-  - [Installing C#](#installing-c#)      
+  - [What is C#](#what-is-c\#)   
+  - [Installing C#](#installing-c\#)      
   - [Installing Repository](#installing-repository)  
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -31,9 +31,9 @@ git clone https://github.com/Eggy115/CSharp.git
 
 ## Usage
 
-To run a C# program, you'll need to compile it first.       
-Once you have downloaded the scripts, build the project, which will compile the code into an executable file. In Visual Studio, you can do this by selecting "Build" from the menu bar and then clicking "Build Solution".     
-Run the executable file by double-clicking it or running it from the command line. In Visual Studio, you can run the program by selecting "Start" from the menu bar or by pressing the "F5" key.    
+- To run a C# program, you'll need to compile it first.       
+- Once you have downloaded the scripts, build the project, which will compile the code into an executable file. In Visual Studio, you can do this by selecting "Build" from the menu bar and then clicking `Build Solution`.     
+- Run the executable file by double-clicking it or running it from the command line. In Visual Studio, you can run the program by selecting "Start" from the menu bar or by pressing the `F5` key.    
 
 ## Contributing
 
