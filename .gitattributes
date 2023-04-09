@@ -1,2 +1,2 @@
-*.py    eol=lf
+*.cs    eol=lf
 *.html linguist-vendored
