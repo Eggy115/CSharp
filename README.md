@@ -3,8 +3,8 @@
 This repository contains various C# programs and scripts.
 
 ## Table of Contents
-- [Getting Started](#getting-started)  
-  - [What is C#](#what-is-c-sharp)   
+- [What is C#](#what-is-c-sharp)   
+- [Installation](#installation)
   - [Installing C#](#installing-c-sharp)    
     - [Windows](#windows)
     - [Linux](#linux)
@@ -14,11 +14,11 @@ This repository contains various C# programs and scripts.
 - [Contributing](#contributing)
 - [License](#license)
 
-## Getting Started
-
-### What is C-Sharp
+## What is C-Sharp
 
 C# is a programming language developed by Microsoft. It is a modern, object-oriented language that is used to develop a wide variety of applications, including desktop and mobile apps, web services, games, and more. C# is a popular language among developers due to its ease of use, extensive libraries, and tight integration with the .NET framework.
+
+## Installation
 
 ### Installing C-Sharp
 
