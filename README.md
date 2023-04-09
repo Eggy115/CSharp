@@ -28,9 +28,9 @@ To run the programs and scripts in this repository, you will need to have the .N
 ```
 git clone https://github.com/Eggy115/CSharp.git
 ```
-
-*OR* Copy and paste code
-*OR* Download individual files
+      
+*OR* copy and paste code     
+*OR* download individual files
 
 ## Usage
 
