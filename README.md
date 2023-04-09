@@ -4,8 +4,8 @@ This repository contains various C# programs and scripts. All code is licensed u
 
 ## Table of Contents
 - [Getting Started](#getting-started)  
-  - [What is C#](#what-is-c%23)   
-  - [Installing C#](#installing-c%23)      
+  - [What is C#](#a)   
+  - [Installing C#](#b)      
   - [Installing Repository](#installing-repository)  
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -13,11 +13,11 @@ This repository contains various C# programs and scripts. All code is licensed u
 
 ## Getting Started
 
-### What is C#
+### What is C# {#a}
 
 C# is a programming language developed by Microsoft. It is a modern, object-oriented language that is used to develop a wide variety of applications, including desktop and mobile apps, web services, games, and more. C# is a popular language among developers due to its ease of use, extensive libraries, and tight integration with the .NET framework.
 
-### Installing C#
+### Installing C# {#b}
 
 To run the programs and scripts in this repository, you will need to have the .NET Framework installed on your computer. You can download the latest version from the official Microsoft website: https://dotnet.microsoft.com/download
 
