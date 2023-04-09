@@ -4,8 +4,8 @@ This repository contains various C# programs and scripts. All code is licensed u
 
 ## Table of Contents
 - [Getting Started](#getting-started)  
-  - [What is C#](#what-is-c\#)   
-  - [Installing C#](#installing-c\#)      
+  - [What is C#](#what-is-c%23)   
+  - [Installing C#](#installing-c%23)      
   - [Installing Repository](#installing-repository)  
 - [Usage](#usage)
 - [Contributing](#contributing)
