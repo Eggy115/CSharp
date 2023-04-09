@@ -5,7 +5,10 @@ This repository contains various C# programs and scripts.
 ## Table of Contents
 - [Getting Started](#getting-started)  
   - [What is C#](#what-is-c-sharp)   
-  - [Installing C#](#installing-c-sharp)      
+  - [Installing C#](#installing-c-sharp)    
+    - [Windows](#windows)
+    - [Linux](#linux)
+    - [macOS](#macOS)  
   - [Installing Repository](#installing-repository)  
 - [Usage](#usage)
 - [Contributing](#contributing)
