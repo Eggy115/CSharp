@@ -1,2 +1,3 @@
 *.cs    eol=lf
 *.html linguist-vendored
+*.htm linguist-vendored
