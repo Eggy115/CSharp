@@ -11,7 +11,7 @@ This repository contains various C# programs and scripts. All code is licensed u
 - [Contributing](#contributing)
 - [License](#license)
 
-## Getting Started
+## Getting Started {#a}
 
 ### What is C# {#a}
 
