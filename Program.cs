@@ -1,19 +1,21 @@
 ﻿using System;
-using EstruturaDoPrograma.Exemplos;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EstruturaDoPrograma
+namespace LittleSampleApp
 {
-    class Program
+  /// <summary>
+  /// Just what it says on the tin. A little sample application for Linguist to try out.
+  /// 
+  /// </summary>
+  class Program
+  {
+    static void Main(string[] args)
     {
-        static void Main()
-        {
-            var s = new Pilha();
-            s.Empilha(1);
-            s.Empilha(10);
-            s.Empilha(100);
-            Console.WriteLine(s.Desempilha());
-            Console.WriteLine(s.Desempilha());
-            Console.WriteLine(s.Desempilha());
-        }
+      Console.WriteLine("Hello, I am a little sample application to test GitHub's Linguist module.");
+      Console.WriteLine("I also include a Razor MVC file just to prove it handles cshtml files now.");
     }
+  }
 }
